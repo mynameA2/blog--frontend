@@ -11,11 +11,11 @@
             </NuxtLink>
         </div>
 
-        <input
+        <input 
             v-model="search" 
             type="text" 
             placeholder="search"
-            class="w-full rounded-md border px-3 py-2"
+            class="bg-gray-500 w-full rounded-md border px-3 py-2"
         />
 
         <p v-if="!filteredPosts.length" class="text-gray-500 text-center">

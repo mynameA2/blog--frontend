@@ -1,27 +1,44 @@
 import { defineStore } from 'pinia'
 import type { Post } from '~/types/post'
 
+const STORAGE_KEY = 'posts'
+
 export const usePostsStore = defineStore('posts', () => {
     const posts = ref<Post[]>([])
 
-    const addPost = (post: Post) => {
-        posts.value.push(post)
+    const hydrate = () => {
+        if(process.server) return
+
+        const raw = localStorage.getItem(STORAGE_KEY)
+        if (raw) {
+            posts.value = JSON.parse(raw)
+            }   
+    }
+    const persist = () => {
+        if (process.server) return
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(posts.value))
     }
 
-    const deletePost = (id: number) => {
-        posts.value = posts.value.filter(post => post.id !== id)
-    }
+    watch(posts, persist, { deep: true })
 
-    const updatePost = (updates: Post) => {
-        const index = posts.value.findIndex(p => p.id === updates.id)
-        if (index !== -1) {
-            posts.value[index] = updates
-        }
-    }
+const addPost = (post: Post) => {
+    posts.value.push(post)
+}
 
-    const getPostById = (id: number) => {
-        return posts.value.find(post => post.id === id)
-    }
+const deletePost = (id: number) => {
+    posts.value = posts.value.filter(post => post.id !== id)
+}
 
-    return { posts, addPost, deletePost, updatePost, getPostById }
+const updatePost = (updates: Post) => {
+    const index = posts.value.findIndex(p => p.id === updates.id)
+    if (index !== -1) {
+        posts.value[index] = updates
+    }
+}
+
+const getPostById = (id: number) => {
+    return posts.value.find(post => post.id === id)
+}
+
+return { posts, hydrate, addPost, deletePost, updatePost, getPostById }
 })

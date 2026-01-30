@@ -1,4 +1,4 @@
-<script lang="ts">
+<script setup lang="ts">
 import { usePostsStore } from "~/stores/posts";
 
 const route = useRoute();

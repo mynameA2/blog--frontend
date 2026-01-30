@@ -14,7 +14,7 @@ watchEffect(() => {
   if (!post.value) {
     console.log("Post not found");
   }
-})
+});
 </script>
 
 <template>

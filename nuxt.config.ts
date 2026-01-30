@@ -14,6 +14,10 @@ export default defineNuxtConfig({
     plugins: [
       tailwindcss(),
     ],
-  }
+  },
+  app: {
+    baseURL: '/blog-frontend/',
+    buildAssetsDir: 'assets',
+  },
 })
 

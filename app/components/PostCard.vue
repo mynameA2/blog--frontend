@@ -21,7 +21,7 @@ const emit = defineEmits<{
 
     <div class="flex gap-3 pt-2">
       <NuxtLink
-        :to="`/create?id=$(post.id)`"
+        :to="`/create?id=${post.id}`"
         class="text-sm text-blue-600 hover:underline"
       >
         Edit

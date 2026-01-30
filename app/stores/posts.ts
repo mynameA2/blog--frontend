@@ -5,6 +5,7 @@ const STORAGE_KEY = 'posts'
 
 export const usePostsStore = defineStore('posts', () => {
     const posts = ref<Post[]>([])
+    const isHydrated = ref(false)
 
     const hydrate = () => {
         if(process.server) return
@@ -12,14 +13,17 @@ export const usePostsStore = defineStore('posts', () => {
         const raw = localStorage.getItem(STORAGE_KEY)
         if (raw) {
             posts.value = JSON.parse(raw)
-            }   
+        }  
+        isHydrated.value = true
     }
-    const persist = () => {
-        if (process.server) return
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(posts.value))
-    }
-
-    watch(posts, persist, { deep: true })
+    watch(
+        posts,
+        () => {
+            if (!isHydrated.value || process.server) return
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(posts.value))
+        },
+        { deep: true }
+    )
 
 const addPost = (post: Post) => {
     posts.value.push(post)

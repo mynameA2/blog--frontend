@@ -14,16 +14,26 @@ const existingPost = computed<Post | undefined>(() => {
   }
   return postsStore.getPostById(postId);
 });
-
-const handleSubmit = (data: Omit<Post, "id" | "createAt">) => {
+const isReady = computed(() => {
+  if (!postId) return true
+  return !!existingPost.value;
+})
+const handleSubmit = (data: Omit<Post, 'id' | 'createdAt'>) => {
   if (existingPost.value) {
     postsStore.updatePost({
       ...existingPost.value,
       ...data,
-    });
+    })
+  } else {
+    postsStore.addPost({
+      id: Date.now(),
+      createdAt: new Date().toISOString(),
+      ...data,
+    })
   }
-  router.push("/");
-};
+
+  router.push('/')
+}
 </script>
 
 <template>
@@ -31,6 +41,6 @@ const handleSubmit = (data: Omit<Post, "id" | "createAt">) => {
     <h2 class="text-2xl font-semibold">
       {{ existingPost ? "Edit Post" : "Create Post" }}
     </h2>
-    <PostForm :initial-values="existingPost" @submit="handleSubmit" />
+    <PostForm :v-if="isReady" :initial-values="existingPost" @submit="handleSubmit" />
   </section>
 </template>

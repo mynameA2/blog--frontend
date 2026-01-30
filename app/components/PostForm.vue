@@ -30,6 +30,7 @@ const onSubmit = (values: { title: string; description: string }) => {
 
 <template>
   <Form
+    :key="JSON.stringify(initialValues)"
     :validation-schema="schema"
     :initial-values="initialValues"
     @submit="onSubmit"
@@ -37,7 +38,7 @@ const onSubmit = (values: { title: string; description: string }) => {
   >
     <div>
       <label class="block text-sm font-medium mb-1">Title</label>
-      <Field name="title" type="text" class="w-full rounded-md border px-3 py-2" />
+      <Field name="title" type="text" class="w-full rounded-md bg-gray-400 border px-3 py-2" />
       <ErrorMessage name="title" class="text-red-600 text-sm" />
     </div>
 
@@ -47,7 +48,7 @@ const onSubmit = (values: { title: string; description: string }) => {
         name="description"
         as="textarea"
         rows="4"
-        class="w-full rounded-md border px-3 py-2"
+        class="w-full rounded-md bg-gray-400 border px-3 py-2"
       />
       <ErrorMessage name="description" class="text-red-600 text-sm" />
     </div>

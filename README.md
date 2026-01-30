@@ -1,76 +1,82 @@
-# Nuxt Minimal Starter
+# Blog Frontend
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Тестовое frontend-приложение блога с возможностью создания, редактирования, удаления и просмотра постов.
 
-## Setup
+## 🚀 Стек технологий
 
-Make sure to install dependencies:
+- **Nuxt 3**
+- **Vue 3 (Composition API)**
+- **TypeScript**
+- **Pinia**
+- **VeeValidate + Yup**
+- **TailwindCSS**
 
-```bash
-# npm
-npm install
+---
 
-# pnpm
-pnpm install
+## 📌 Функциональность
 
-# yarn
-yarn install
+- Просмотр списка постов
+- Просмотр отдельного поста
+- Создание поста
+- Редактирование поста
+- Удаление поста
+- Валидация формы
+- Сохранение данных в `localStorage`
+- Восстановление данных при перезагрузке страницы
+- Адаптивный интерфейс
 
-# bun
-bun install
+---
+
+## 🧱 Структура проекта
+
+```txt
+app/
+├─ pages/
+│  ├─ index.vue          # список постов
+│  ├─ create.vue         # создание / редактирование
+│  └─ posts/[id].vue     # страница поста
+│
+├─ components/
+│  ├─ PostCard.vue
+│  └─ PostForm.vue
+│
+├─ stores/
+│  └─ posts.ts           # Pinia store + persistence
+│
+├─ types/
+│  └─ post.ts
+│
+├─ layouts/
+│  └─ default.vue
+│
+└─ app.vue
+
+🗂 Хранение данных
+
+В качестве источника данных используется Pinia Store.
+Состояние постов сохраняется в localStorage и автоматически восстанавливается при перезагрузке страницы.
+
+Реализован безопасный механизм hydration для Nuxt 3 (без race-condition).
+
+⸻
+
+📝 Валидация формы
+	•	Название поста — максимум 12 символов
+	•	Описание поста — максимум 50 символов
+	•	Используется VeeValidate + Yup
+	•	Семантическая HTML-разметка (form, label, input, textarea)
 ```
+⚙️ Установка и запуск
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
+npm install
 npm run dev
 
-# pnpm
-pnpm dev
+Приложение будет доступно по адресу:
+http://localhost:3000
 
-# yarn
-yarn dev
+📎 Примечания
+	•	Backend отсутствует — логика реализована полностью на клиенте
+	•	Архитектура проекта позволяет легко заменить localStorage на API
+	•	Проект написан с упором на читаемость и расширяемость
 
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-# blog--frontend
+    автор: [mynameA2] (https://github.com/mynameA2)
